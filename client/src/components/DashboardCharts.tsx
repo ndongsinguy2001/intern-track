@@ -17,6 +17,7 @@ interface DashboardChartsProps {
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 
 const DashboardCharts: React.FC<DashboardChartsProps> = ({ applications }) => {
+  // Répartition par statut
   const statusCounts = applications.reduce((acc, app) => {
     acc[app.status] = (acc[app.status] || 0) + 1;
     return acc;
@@ -24,6 +25,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ applications }) => {
 
   const pieData = Object.entries(statusCounts).map(([name, value]) => ({ name, value }));
 
+  // Candidatures par mois
   const monthCounts = applications.reduce((acc, app) => {
     const date = new Date(app.appliedDate);
     const month = date.toLocaleString('default', { month: 'long' });
@@ -51,6 +53,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ applications }) => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      {/* Graphique circulaire */}
       <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
         <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Répartition par statut</h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -65,7 +68,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ applications }) => {
               fill="#8884d8"
               dataKey="value"
             >
-              {pieData.map((entry, index) => (
+              {pieData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
@@ -74,6 +77,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ applications }) => {
         </ResponsiveContainer>
       </div>
 
+      {/* Graphique en barres */}
       <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
         <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Candidatures par mois</h3>
         <ResponsiveContainer width="100%" height={300}>
