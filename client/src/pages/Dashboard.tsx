@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
@@ -31,7 +31,6 @@ const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingApp, setEditingApp] = useState<Application | null>(null);
 
-  // Vérifier si l'utilisateur connecté est l'admin (comparer avec l'email défini dans .env)
   const isAdmin = user?.email === import.meta.env.VITE_ADMIN_EMAIL;
 
   const fetchApplications = async () => {
@@ -114,8 +113,7 @@ const Dashboard = () => {
               >
                 {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
               </button>
-              
-              {/* Bouton Admin visible uniquement pour toi */}
+
               {isAdmin && (
                 <button
                   onClick={() => navigate('/admin')}
@@ -124,7 +122,7 @@ const Dashboard = () => {
                   Admin
                 </button>
               )}
-              
+
               <button
                 onClick={handleLogout}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium"
